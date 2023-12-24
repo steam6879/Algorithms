@@ -34,7 +34,7 @@ class ChainedHash:
         while p is not None:
             if p.key == key:
                 return False
-        p = p.next
+            p = p.next
 
         temp = Node(key, value, self.table[hash])
         self.table[hash] = temp
@@ -63,3 +63,48 @@ class ChainedHash:
                 print(f' -> {p.key} ({p.value})', end='')
                 p = p.next
             print()
+
+
+from enum import Enum
+
+Menu = Enum('Menu', ['Add', 'Delete', 'Search', 'Dump', 'Exit'])
+
+def select_menu() -> Menu:
+    s = [f'({m.value}){m.name}' for m in Menu]
+    while True:
+        print(*s, sep = '  ', end='')       
+        #The reason for using *s instead of s is to unpack the iterable (like a list or tuple) in Python.
+        n = int(input(': '))
+        if 1 <= n <= len(Menu):
+            return Menu(n)
+            #Menu(n) serves to convert the user's choice into a Menu enum value.
+
+hash = ChainedHash(13)
+
+while True:
+    menu = select_menu()
+
+    if menu == Menu.Add:
+        key = int(input('Enter the key: '))
+        val = input('Enter the value: ')
+        if not hash.add(key, val):
+            print('Failed to add the data')
+
+    elif menu == Menu.Delete:
+        key = int(input('Enter the key: '))
+        if not hash.remove(key):
+            print('Failed to delete the data')
+
+    elif menu == Menu.Search:
+        key = int(input('Enter the key: '))
+        t = hash.search(key)
+        if t is not None:
+            print(f'The value is {t}')
+        else:
+            print('No data')
+
+    elif menu == Menu.Dump:
+        hash.dump()
+
+    else:
+        break
