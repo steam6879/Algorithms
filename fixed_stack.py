@@ -83,7 +83,7 @@ def select_menu() -> Menu:
             return Menu(n)
         
 #main
-s = FixedStack((64)
+s = FixedStack(64)
                
 while True:
     print(f'current data: {len(s)} / {s.capacity}')
@@ -92,9 +92,33 @@ while True:
     if menu == Menu.Push:
         x = int(input('data: '))
         try:
-            s.Push(x)
+            s.push(x)
         except FixedStack.Full:
             print('Stack is full')
 
     elif menu == Menu.Pop:
-        
+        try:
+            x = s.pop()
+            print(f'popped data is {x}')
+        except FixedStack.Empty:
+            print('Stack is empty')
+
+    elif menu == Menu.Peek:
+        try:
+            x = s.peek()
+            print(f'peeked data is {x}')
+        except FixedStack.Empty:
+            print('Stack is empty')
+
+    elif menu == Menu.Search:
+        x = int(input('data: '))
+        if x in s:
+            print(f'{s.count(x)} times, the value {x} is at {s.find(x)}')
+        else:
+            print('No such value')
+
+    elif menu == Menu.Dump:
+        s.dump()
+
+    else:
+        break
