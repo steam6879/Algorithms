@@ -17,4 +17,3 @@ if i < 0:
 while i < cnt:
     print(f'{i + 1} element = {a[i % n]}')
     i += 1
-    
