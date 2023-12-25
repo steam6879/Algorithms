@@ -56,3 +56,4 @@ if __name__ == '__main__':
     print('\nascending order')
     for i in range(num):
         print(f'x[{i}] = {x[i]}')
+        
