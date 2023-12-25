@@ -1,5 +1,6 @@
 from typing import Any
 from enum import Enum
+from collections import deque
 
 class FixedStack:
     class Empty(Exception):
@@ -69,6 +70,47 @@ class FixedStack:
 
         else:
             print(self.stk[:self.ptr])
+
+class Stack:    #Stack class using deque
+    def __init__(self, maxlen: int = 256) -> None:
+        self.capacity = maxlen
+        self.__stk = deque([], maxlen)  #__stk is a private member of the Stack class
+    
+    def __len__(self) -> int:
+        return len(self.__stk)
+    
+    def is_empty(self) -> bool:
+        return not self.__stk
+    
+    def is_full(self) -> bool:
+        return len(self.__stk) == self.__stk.maxlen
+    
+    def push(self, value) -> None:
+        self.__stk.append(value)
+
+    def pop(self):
+        return self.__stk.pop()
+    
+    def peek(self):
+        return self.__stk[-1]
+    
+    def clear(self):
+        self.__stk.clear()
+
+    def find(self, value) -> Any:
+        try:
+            return self.__stk.index(value)
+        except ValueError:
+            return -1
+
+    def count(self, value) -> bool:
+        return self.__stk.count(value)
+    
+    def __contains__(self, value) -> bool:
+        return self.count(value) >  0
+
+    def dump(self) -> None:
+        print(list(self.__stk))
 
 #FixedStack test
 Menu = Enum('Menu', ['Push', 'Pop', 'Peek', 'Search', 'Dump', 'Exit'])
