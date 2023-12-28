@@ -2,8 +2,8 @@ def shell_sort(a):
     n = len(a)
     h = 1   # interval
 
-    while h < n // 9:
-        h = h * 3 + 1
+    while h < n // 9:   # 1, 4, 13, 40, 121, 364, 1093, ...
+        h = h * 3 + 1 
 
     while h > 0:
         for i in range(h, n):

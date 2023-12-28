@@ -1,38 +1,43 @@
-import random
+# [Do it! 실습 6-12] 퀵 정렬 알고리즘 구현(비재귀적인 퀵 정렬)
 
-def shell_sort(a):
-    n = len(a)
-    h = 1   # interval
+from stack import FixedStack  # 실습 4C-1의 파일 import
+from typing import MutableSequence
 
-    while h < n // 9:
-        h = h * 3 + 1
-        print(h)
+def qsort(a: MutableSequence, left: int, right: int) -> None:
+    """a[left] ~ a [right]를 퀵 정렬(비재귀 버전)"""
+    range = FixedStack(right - left + 1)  # 스택 생성
 
-    while h > 0:
-        for i in range(h, n):
-            j = i - h
-            tmp = a[i]
+    range.push((left, right))
 
-            while j >= 0 and a[j] > tmp:
-                a[j + h] = a[j]
-                j -= h
-            
-            a[j + h] = tmp
-        
-        h //= 3
+    while not range.is_empty():
+        pl, pr = left, right = range.pop()  # 왼쪽, 오른쪽 커서를 꺼냄
+        x = a[(left + right) // 2]          # 피벗(중앙 요소)
+
+        while pl <= pr:
+            while a[pl] < x: pl += 1
+            while a[pr] > x: pr -= 1
+            if pl <= pr:                        # 실습 6-10, 실습 6-11과 같음
+                a[pl], a[pr] = a[pr], a[pl]
+                pl += 1
+                pr -= 1
+
+        if left < pr: range.push((left, pr))    # 왼쪽 그룹의 커서를 저장
+        if pl < right: range.push((pl, right))  # 오른쪽 그룹의 커서를 저장
+
+def quick_sort(a: MutableSequence) -> None:
+    """퀵 정렬"""
+    qsort(a, 0, len(a) - 1)
 
 if __name__ == '__main__':
-    print('shell sort')
-    # num = int(input('how many elements do you want to sort?: '))
-    num = 1000
-    x = random.sample(range(1000), num)
-    # x = [None] * num
+    print('비재귀적인 퀵 정렬')
+    num = int(input('원소 수를 입력하세요.: '))
+    x = [None] * num    # 원소 수가 num인 배열을 생성
 
-    # for i in range(num):
-    #     x[i] = int(input(f'x[{i}]: '))
-    
-    shell_sort(x)
+    for i in range(num):
+        x[i] = int(input(f'x[{i}]: '))
 
-    print('\nascending order')
+    quick_sort(x)       # 배열 x를 퀵 정렬
+
+    print('오름차순으로 정렬했습니다.')
     for i in range(num):
         print(f'x[{i}] = {x[i]}')
