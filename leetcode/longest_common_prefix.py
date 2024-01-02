@@ -4,5 +4,11 @@ class Solution:
         ptr = 0
         n = len(min(str))
         m = {}
-        for i in range(n):
+        for i in range(n):  #hash map
             m[strs[i]] = i
+        
+        j = 0
+
+        for i in range(n):
+            while j < len(strs):
+                if strs[j][i] in m:
