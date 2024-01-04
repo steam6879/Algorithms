@@ -1,2 +1,3 @@
-strs = ['flower', 'flow', 'sdf']
-print(min(strs))
+s = "()"
+lst = list(s)
+print(s[0:2])
