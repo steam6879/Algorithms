@@ -1,14 +1,30 @@
 from typing import List, Sequence
 
 class Solution:
+
+    def bin_search(self, a: Sequence, key: any):
+        pl = 0
+        pr = len(a) - 1
+
+        while True:
+            pc = (pl + pr) // 2
+            if a[pc] == key:
+                return pc
+            elif a[pc] < key:
+                pl = pc + 1
+            else:
+                pr = pc - 1
+
+            if pl == pr:
+                if a[pl] < key:
+                    return pl + 1
+                else:
+                    return pl - 1
+
     def searchInsert(self, nums: List[int], target: int) -> int:
         pl = 0
         pr = len(nums) - 1
-        if len(nums) == 1:
-            if nums[0] < target:
-                return 1
-            else:
-                return 0
+
         while True:
             pc = (pl + pr) // 2
             if nums[pc] == target:
@@ -17,18 +33,10 @@ class Solution:
                 pl = pc + 1
             else:
                 pr = pc - 1
-                if pr == -1:
-                    return 0
 
             if pl == pr:
 
                 if nums[pl] < target:
                     return pl + 1
                 else:
-                    return pl
-                
-if __name__ == '__main__':
-    sol = Solution()
-    x = [1, 3]
-    print(sol.searchInsert(x, 2))
-    
+                    return pl - 1
