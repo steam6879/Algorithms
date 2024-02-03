@@ -16,6 +16,8 @@ class Solution(object):
                 return False
             
             else:
-                return left.val == right.val and subSymmetric(left.left, right.right) and subSymmetric(left.right, right.left)
+                return left.val == right.val \
+                        and subSymmetric(left.left, right.right) \
+                        and subSymmetric(left.right, right.left)
             
         return subSymmetric(root, root)
