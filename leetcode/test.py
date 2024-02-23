@@ -1,29 +1,32 @@
 from typing import Optional
 
+# Definition for a binary tree node
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
-    def maxDepth(self, root: 'Node') -> int:
-        if root==None:
-            return 0
-        que=Deque()
-        que.append(root)
-        count=0
-        while(que):
-            n=len(que)
-            for _ in range(n):
-                cur=que.popleft()
-                for i in cur.children:
-                    que.append(i)
-            count+=1
-        return count
-    
-def maxDepth(self, root: 'Node') -> int:
-        if not root: return 0
-        queue = collections.deque()
-        depth = 1
-        queue.append((root,depth))
-        while queue:
-            node, depth = queue.popleft()
-            if node.children:
-                for child in node.children:
-                    queue.append((child,depth+1))
-        return depth
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def isIdentical(root, subRoot):
+            if not root and not subRoot:
+                return True
+
+            if not root or not subRoot or root.val != subRoot.val:
+                return False
+
+            return (root.val == subRoot.val and
+                    isIdentical(root.left, subRoot.left) and
+                    isIdentical(root.right, subRoot.right))
+
+        def dfs(root, subRoot):
+            if not root:
+                return False
+
+            if root.val == subRoot.val and isIdentical(root, subRoot):
+                return True
+
+            return dfs(root.left, subRoot) or dfs(root.right, subRoot)
+
+        return dfs(root, subRoot)
