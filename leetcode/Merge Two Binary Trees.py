@@ -8,10 +8,7 @@ class TreeNode:
         self.right = right
 class Solution:
     def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
-        root3 = TreeNode()
-        root3.val = None
-        root3.left = None
-        root3.right = None
+        root3 = TreeNode(root1.val + root2.val)
 
         def subMerge(root1, root2, root3):
             if root1 and root2:
