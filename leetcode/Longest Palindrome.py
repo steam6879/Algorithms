@@ -1,4 +1,19 @@
+from collections import Counter
 class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        counters = Counter(s)
+
+        evens = [value for value in counters.value() if value % 2 == 0]
+        odds = [value for value in counters.value() if value % 2 != 0]
+
+        if odds:
+            useOdds = sum(odds) - (len(odds) - 1)
+            return sum(evens) + useOdds
+        else:
+            return sum(evens)
+
+
+class Solution:     #uncorrect code
     def longestPalindrome(self, s: str) -> int:
         if len(s) < 2:
             return 1
@@ -13,12 +28,14 @@ class Solution:
         evenMap = []
         oddMap = []
         for i in m:
-            if m[i] // 2 == 1:
+            if m[i] % 2 == 1:
                 oddMap.append(m[i])
             else:
                 evenMap.append(m[i])
-
-        ans = max(oddMap) + sum(evenMap)
+        if len(oddMap) < 1:
+            ans = sum(evenMap)
+        else:
+            ans = max(oddMap) + sum(evenMap)
 
         return ans
         
