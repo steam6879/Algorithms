@@ -6,7 +6,7 @@ class Solution:
         g.sort()
         s.sort()
 
-        while gp < len(g) or sp <len(s):
+        while gp < len(g) and sp < len(s):
             if g[gp] <= s[sp]:
                 gp += 1
                 sp += 1
