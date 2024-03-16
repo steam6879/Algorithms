@@ -1,39 +1,30 @@
-from collections import Counter
+from typing import List
 
 class Solution:
-    def longestPalindrome(self, s: str) -> int:
-        hm = Counter(s)
-        even = [value for value in hm.values() if value % 2 == 0]
-        odd = [value for value in hm.values() if value % 2 != 0]
-        if odd: 
-            use_odds = sum(odd) - (len(odd) - 1) 
-            return sum(even) + use_odds
-        else: 
-            return sum(even)
-        
-class Solution:
-    def longestPalindrome(self, s: str) -> int:
-        if len(s) < 2:
-            return 1
-        
-        m = {}
-        for char in s:
-            if char in m:
-                m[char] += 1
-            else:
-                m[char] = 1
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if not nums2:
+            return None
 
-        evenMap = []
-        oddMap = []
-        for i in m:
-            if m[i] % 2 == 1:
-                oddMap.append(m[i])
-            else:
-                evenMap.append(m[i])
-        if len(oddMap) < 1:
-            ans = sum(evenMap)
-        else:
-            ans = max(oddMap) + sum(evenMap)
+        mapping = {}
+        result = []
+        stack = []
+        stack.append(nums2[0])
 
-        return ans
-        
+        for i in range(1, len(nums2)):
+            while stack and nums2[i] > stack[-1]:       # if stack is not empty, then compare it's last element with nums2[i]
+                mapping[stack[-1]] = nums2[i]           # if the new element is greater than stack's top element, then add this to dictionary 
+                stack.pop()                             # since we found a pair for the top element, remove it.
+            stack.append(nums2[i])                      # add the element nums2[i] to the stack because we need to find a number greater than this
+
+        for element in stack:                           # if there are elements in the stack for which we didn't find a greater number, map them to -1
+            mapping[element] = -1
+
+        for i in range(len(nums1)):
+            result.append(mapping[nums1[i]])
+        return result
+    
+if __name__ == '__main__':
+    s = Solution()
+    nums1 = [2, 4]
+    nums2 = [1, 2, 3, 4]
+    print(s.nextGreaterElement(nums1, nums2))
