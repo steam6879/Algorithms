@@ -20,9 +20,11 @@ class Solution:
             dfs(root.right)
 
         dfs(root)
-        ans = TreeNode()
-        while order:
-            ans.val = order.popleft()
-            ans.right
 
-        return ans
+        dummy = TreeNode()
+        current = dummy
+        while order:
+            current.right = TreeNode(val=order.popleft())
+            current = current.right
+
+        return dummy.right

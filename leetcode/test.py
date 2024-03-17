@@ -1,30 +1,34 @@
-from typing import List
+from collections import deque
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Solution:
-    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        if not nums2:
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        if not root:
             return None
-
-        mapping = {}
-        result = []
-        stack = []
-        stack.append(nums2[0])
-
-        for i in range(1, len(nums2)):
-            while stack and nums2[i] > stack[-1]:       # if stack is not empty, then compare it's last element with nums2[i]
-                mapping[stack[-1]] = nums2[i]           # if the new element is greater than stack's top element, then add this to dictionary 
-                stack.pop()                             # since we found a pair for the top element, remove it.
-            stack.append(nums2[i])                      # add the element nums2[i] to the stack because we need to find a number greater than this
-
-        for element in stack:                           # if there are elements in the stack for which we didn't find a greater number, map them to -1
-            mapping[element] = -1
-
-        for i in range(len(nums1)):
-            result.append(mapping[nums1[i]])
-        return result
-    
-if __name__ == '__main__':
-    s = Solution()
-    nums1 = [2, 4]
-    nums2 = [1, 2, 3, 4]
-    print(s.nextGreaterElement(nums1, nums2))
+        
+        order = deque()
+        
+        # Perform in-order traversal to get the sorted order of values
+        def dfs(root):
+            if not root:
+                return
+            dfs(root.left)
+            order.append(root.val)
+            dfs(root.right)
+        
+        dfs(root)
+        
+        # Construct the new tree using the sorted order
+        dummy = TreeNode()
+        current = dummy
+        while order:
+            current.right = TreeNode(val=order.popleft())
+            current = current.right
+        
+        return dummy.right
