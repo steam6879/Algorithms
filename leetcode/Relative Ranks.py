@@ -3,11 +3,11 @@ import heapq
 
 class Solution:
     def findRelativeRanks(self, score: List[int]) -> List[str]:
-        heap = score
+        heap = score[:]
         heapq.heapify(heap)
         m = {}
 
-        for i in range(len(score), 1, -1):
+        for i in range(len(score), 0, -1):
             item = heapq.heappop(heap)
             m[item] = i
         
