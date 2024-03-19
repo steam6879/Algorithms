@@ -3,25 +3,29 @@ import heapq
 
 class Solution:
     def findRelativeRanks(self, score: List[int]) -> List[str]:
-        heap = heapq.heapify(score)
+        heap = score
+        heapq.heapify(heap)
         m = {}
-        if len(heap) == 1:
-            m[heapq.heappop(heap)] = 'Gold Medal'
-        elif len(heap) == 2:
-            m[heapq.heappop(heap)] = 'Gold Medal'
-            m[heapq.heappop(heap)] = 'Silver Medal'
-        elif len(heap) == 3:
-            m[heapq.heappop(heap)] = 'Gold Medal'
-            m[heapq.heappop(heap)] = 'Silver Medal'
-            m[heapq.heappop(heap)] = 'Bronze Medal'
 
-        elif len(heap) > 3:
-            m[heapq.heappop(heap)] = 'Gold Medal'
-            m[heapq.heappop(heap)] = 'Silver Medal'
-            m[heapq.heappop(heap)] = 'Bronze Medal'
+        for i in range(len(score), 1, -1):
+            item = heapq.heappop(heap)
+            m[item] = i
+        
+        ans = []
+        for i in range(len(score)):
+            match m[score[i]]:
+                case 1:
+                    ans.append("Gold Medal")
+                case 2:
+                    ans.append("Silver Medal")
+                case 3:
+                    ans.append("Bronze Medal")
+                case _:
+                    ans.append(f"{m[score[i]]}")
 
-            for i in range(4, len(heap)):
-                m[heapq.heappop(heap)] = i
+        return ans
 
-        for i, key in len(score):
-            
+
+if __name__ == "__main__":
+    s = Solution()
+    print(s.findRelativeRanks(score= [10, 3, 8 ,9, 4]))
