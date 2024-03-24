@@ -25,10 +25,10 @@ if __name__ == "__main__":
 
     # Add new elements to the stream and find the kth largest element.
     print(obj.add(3))  # Output: 4
-    print(obj.add(5))  # Output: 4
+    print(obj.add(5))  # Output: 5
     print(obj.add(10)) # Output: 5
-    print(obj.add(9))  # Output: 5
-    print(obj.add(4))  # Output: 5
+    print(obj.add(9))  # Output: 8
+    print(obj.add(4))  # Output: 8
 
 
 
