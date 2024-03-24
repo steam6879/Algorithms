@@ -17,9 +17,19 @@ class KthLargest:
         return self.nums[0]
         
 if __name__ == "__main__":
-    heap = [4, 5, 8, 2]
-    heapq.heapify(heap)
-    print(heap[-3])
+    # heap = [4, 5, 8, 2]
+    # heapq.heapify(heap)
+    # print(heap[-3])
+    # Create a KthLargest object with k=3 and initial elements [4, 5, 8, 2].
+    obj = KthLargest(3, [4, 5, 8, 2])
+
+    # Add new elements to the stream and find the kth largest element.
+    print(obj.add(3))  # Output: 4
+    print(obj.add(5))  # Output: 4
+    print(obj.add(10)) # Output: 5
+    print(obj.add(9))  # Output: 5
+    print(obj.add(4))  # Output: 5
+
 
 
 # Your KthLargest object will be instantiated and called as such:
