@@ -1,8 +1,22 @@
-trust = [[1,3],[1,4],[2,3],[2,4],[4,3]]
-n = 4
-m = {}
-for i in range(len(trust)):
-    a, b = trust[i][0], trust[i][1]
-    m[a] = m.get(a, []) + [b]
-    # m[b] = m.get(b, []) + [a]
-print(m)
+from typing import List
+
+class Solution:
+    def longestCommonPrefix(self, v: List[str]) -> str:
+        ans=""
+        v=sorted(v)
+        first=v[0]
+        last=v[-1]
+
+        for i in range(min(len(first),len(last))):
+            if(first[i]!=last[i]):
+                return ans
+            
+            ans+=first[i]
+
+        return ans 
+    
+if __name__ == '__main__':
+    sol = Solution()
+    x = ['flower', 'flow', 'flight']
+
+    print(sol.longestCommonPrefix(x))
