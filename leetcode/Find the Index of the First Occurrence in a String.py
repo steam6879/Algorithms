@@ -1,13 +1,18 @@
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        hayPtr, needlePtr = 0, 0
-        for char in haystack:
-            if char == needle[needlePtr]:
-                needlePtr += 1
-            elif char != needle[needlePtr]:
-                ptr = 0
-            elif needlePtr == len(needle) - 1:
-                return 
+        for i in range(len(haystack) - len(needle) + 1):
+            if haystack[i:i + len(needle)] == needle:
+                return i
+            
+        return -1
+    
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        return haystack.find(needle)
+
+
+if __name__ == '__main__':
+    print(Solution.strStr(Solution, 'sadbutsad', 'but'))
 
         
 class Solution:

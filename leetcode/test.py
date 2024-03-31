@@ -1,22 +1,21 @@
-from typing import List
-
 class Solution:
-    def longestCommonPrefix(self, v: List[str]) -> str:
-        ans=""
-        v=sorted(v)
-        first=v[0]
-        last=v[-1]
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        
+        answer = False
 
-        for i in range(min(len(first),len(last))):
-            if(first[i]!=last[i]):
-                return ans
+        if len(s) != len(t):
+            return answer
+        
+        else:
+            s_check = []
+            t_check = []
+            for i in s:
+                s_check.append(s.index(i))
+
+            for j in t:
+                t_check.append(t.index(j))
+
+            if s_check == t_check:
+                answer = True
             
-            ans+=first[i]
-
-        return ans 
-    
-if __name__ == '__main__':
-    sol = Solution()
-    x = ['flower', 'flow', 'flight']
-
-    print(sol.longestCommonPrefix(x))
+            return answer
