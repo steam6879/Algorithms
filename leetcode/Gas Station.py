@@ -14,3 +14,6 @@ class Solution:
                 ans = i + 1
 
         return ans
+
+if __name__ == "__main__":
+    print(Solution.canCompleteCircuit(Solution, gas=[1, 2, 3, 4, 5], cost=[3, 4, 5, 1, 2]))
