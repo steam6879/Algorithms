@@ -1,15 +1,25 @@
-class Solution:     #24.5.6. ~ my solution in grind 98
-    def isValid(self, s: str) -> bool:
-        stack = []
-        pairs = {'[' : ']',
-             '{' : '}',
-             '(' : ')'}
-        
-        for bracket in s:
-            if bracket in pairs:
-                stack.append(pairs[bracket])
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        stkS, stkT = [], []
+        for char in s:
+            if char == '#':
+                if not stkS:
+                    continue
+                stkS.pop()
+            else:
+                stkS.append(char)
 
-            elif not stack or bracket != stack.pop():
-                return False
-                
-        return not stack
+        for char in t:
+            if char == '#':
+                if not stkT:
+                    continue
+                stkT.pop()
+            else:
+                stkT.append(char)
+
+        return stkS == stkT
+    
+if __name__ == "__main__":
+    s = "a##c"
+    t = "#a#c"
+    print(Solution.backspaceCompare(Solution, s, t))
