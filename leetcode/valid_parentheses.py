@@ -16,6 +16,22 @@ class Solution(object):
 
         return len(stack) == 0
     
+class Solution:     #24.5.6. ~ my solution in grind 98
+    def isValid(self, s: str) -> bool:
+        stack = []
+        pairs = {'[' : ']',
+             '{' : '}',
+             '(' : ')'}
+        
+        for bracket in s:
+            if bracket in pairs:
+                stack.append(pairs[bracket])
+
+            elif not stack or bracket != stack.pop():
+                return False
+                
+        return not stack
+    
 # class Solution:
 #     def isValid(self, s: str) -> bool:
 #         lst = s.list()

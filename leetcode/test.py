@@ -1,20 +1,15 @@
-from typing import List
-from collections import Counter
+class Solution:     #24.5.6. ~ my solution in grind 98
+    def isValid(self, s: str) -> bool:
+        stack = []
+        pairs = {'[' : ']',
+             '{' : '}',
+             '(' : ')'}
+        
+        for bracket in s:
+            if bracket in pairs:
+                stack.append(pairs[bracket])
 
-nums = [0, 0, 1, 0, 0, 0, 1, 1]
-prefixSum = [0] * len(nums)
-prefixSum[0] = -1 if nums[0] == 0 else 1
-
-for i in range(1, len(nums)):
-    if nums[i] == 0:
-        prefixSum[i] = prefixSum[i - 1] - 1
-    else:
-        prefixSum[i] = prefixSum[i - 1] + 1
-
-m = Counter(prefixSum)
-
-maxKey = max(m, key = m.get)
-i1 = prefixSum.index(maxKey)
-i2 = len(prefixSum) - 1 - prefixSum[::-1].index(maxKey)
-
-print(i1, i2)
+            elif not stack or bracket != stack.pop():
+                return False
+                
+        return not stack
