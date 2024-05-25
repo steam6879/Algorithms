@@ -1,25 +1,34 @@
+from typing import Optional, ListNode
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
 class Solution:
-    def backspaceCompare(self, s: str, t: str) -> bool:
-        stkS, stkT = [], []
-        for char in s:
-            if char == '#':
-                if not stkS:
-                    continue
-                stkS.pop()
-            else:
-                stkS.append(char)
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list1:
+            return list2
+        elif not list2:
+            return list1
+        
+        dummy = ListNode(-1)
+        curr = dummy.next
 
-        for char in t:
-            if char == '#':
-                if not stkT:
-                    continue
-                stkT.pop()
+        
+        while list1 and list2:
+            if list1.val > list2.val:
+                curr = ListNode(list2.val)
+                list1 = list1.next
             else:
-                stkT.append(char)
+                curr = ListNode(list1.val)
+                list1 = list1.next
 
-        return stkS == stkT
-    
-if __name__ == "__main__":
-    s = "a##c"
-    t = "#a#c"
-    print(Solution.backspaceCompare(Solution, s, t))
+            curr =  curr.next
+        
+        if list1:
+            curr = list1
+        elif list2:
+            curr = list2
+
+        return dummy.next
