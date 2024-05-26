@@ -19,17 +19,17 @@ class Solution:
 
         return newHead
 
-#iteratively algorithm
-# class Solution:
-#     def reverseList(self, head: ListNode) -> ListNode:
-#         prev, curr = None, head
-#         node = head
-#         while curr:
-#             tempNext = curr
-#             curr.next = prev
-#             prev, curr = curr, tempNext.next
+# iteratively algorithm
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        prev, curr = None, head
+
+        while curr:
+            tempNext = curr
+            curr.next = prev
+            prev, curr = curr, tempNext
         
-#         return prev
+        return prev
 
 #stack algorithm
 # class Solution:
