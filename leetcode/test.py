@@ -1,34 +1,22 @@
-from typing import Optional, ListNode
+from typing import Optional
 
+
+# Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
 
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        if not list1:
-            return list2
-        elif not list2:
-            return list1
-        
-        dummy = ListNode(-1)
-        curr = dummy.next
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        m = set()
 
-        
-        while list1 and list2:
-            if list1.val > list2.val:
-                curr = ListNode(list2.val)
-                list1 = list1.next
+        while head:
+            if head in m:
+                return True
             else:
-                curr = ListNode(list1.val)
-                list1 = list1.next
+                m.add(head)
+                head = head.next
 
-            curr =  curr.next
-        
-        if list1:
-            curr = list1
-        elif list2:
-            curr = list2
-
-        return dummy.next
+        return False
