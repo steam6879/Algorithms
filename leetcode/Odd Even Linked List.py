@@ -15,7 +15,7 @@ class Solution:
 
         odd = head
         even = head.next
-        even_head = even
+        evenHead = even
 
         while even and even.next:
             odd.next = even.next
@@ -23,5 +23,6 @@ class Solution:
             even.next = odd.next
             even = even.next
 
-        odd.next = even_head
+        odd.next = evenHead
+
         return head

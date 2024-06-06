@@ -1,6 +1,7 @@
 # Definition for singly-linked list.
 from typing import Optional
 
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -15,7 +16,7 @@ class Solution:
 
         dummy = prev = ListNode(0)
         dummy.next = curr = head
-        
+
         while curr and curr.next:
             temp = curr.next
             curr.next = temp.next
@@ -26,4 +27,3 @@ class Solution:
             prev = temp.next
 
         return dummy.next
-    
