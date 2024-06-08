@@ -1,28 +1,18 @@
-from collections import Counter
-
-
 class Solution:
-    def longestPalindrome(self, s: str) -> int:
-        m = Counter(s)
-        odd, even = [], []
-        count = 0
-
-        for key in m:
-            if m[key] % 2 == 0:
-                even.append(m[key])
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        maxLength = 0
+        charSet = set()
+        left = 0
+        
+        for right in range(n):
+            if s[right] not in charSet:
+                charSet.add(s[right])
+                maxLength = max(maxLength, right - left + 1)
             else:
-                odd.append(m[key])
-
-        count += sum(even)
-
-        if odd:
-            count += max(odd)
-            odd.remove(max(odd))
-
-            for num in odd:
-                count += num - 1
-
-        return count
-
-if __name__ == "__main__":
-    print(Solution.longestPalindrome(Solution, s="adam"))
+                while s[right] in charSet:
+                    charSet.remove(s[left])
+                    left += 1
+                charSet.add(s[right])
+        
+        return maxLength
