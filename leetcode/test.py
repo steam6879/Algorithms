@@ -1,42 +1,28 @@
-class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        m = {}
-        for char in s:
-            if char in m:
-                m[char] += 1
-
-            else:
-                m[char] = 1
-
-        for char in t:
-            if char in m:
-                m[char] -= 1
-                if m[char] < 1:
-                    m.pop(char)
-
-            else:
-                return False
-
-        return len(m) == 0
+from collections import Counter
 
 
 class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        ds = {}
-        dt = {}
+    def longestPalindrome(self, s: str) -> int:
+        m = Counter(s)
+        odd, even = [], []
+        count = 0
 
-        for char in s:
-            if char in ds:
-                ds[char] += 1
-
+        for key in m:
+            if m[key] % 2 == 0:
+                even.append(m[key])
             else:
-                ds[char] = 1
+                odd.append(m[key])
 
-        for char in t:
-            if char in dt:
-                dt[char] += 1
+        count += sum(even)
 
-            else:
-                dt[char] = 1
+        if odd:
+            count += max(odd)
+            odd.remove(max(odd))
 
-        return ds == dt
+            for num in odd:
+                count += num - 1
+
+        return count
+
+if __name__ == "__main__":
+    print(Solution.longestPalindrome(Solution, s="adam"))
