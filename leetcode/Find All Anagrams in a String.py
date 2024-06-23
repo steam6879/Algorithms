@@ -14,7 +14,7 @@ class Solution:
         pCounter = Counter(p)
         sCounter = Counter(s[:len(p)-1])
 
-        for i in range(len(p)-1,len(s)):
+        for i in range(len(p)-1, len(s)):
             sCounter[s[i]] += 1   # include a new char in the window
 
             if sCounter == pCounter:    # This step is O(1), since there are at most 26 English letters 
