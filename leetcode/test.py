@@ -1,14 +1,23 @@
-# Time Complexity :  O(n)
-# Space Complexity : O(1)
-class Solution(object):
-    def characterReplacement(self, s, k):
-        maxlen, largestCount = 0, 0
-        arr = collections.Counter()
-        for idx in range(len(s)):
-            arr[s[idx]] += 1
-            largestCount = max(largestCount, arr[s[idx]])
-            if maxlen - largestCount >= k:
-                arr[s[idx - maxlen]] -= 1
-            else:
-                maxlen += 1
-        return maxlen
+from typing import Optional
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return None
+        
+        minDepth = 0
+
+        def dfs(root):
+            if not root:
+                return None
+            
+            depth += 1
+            minDepth = min(min)
