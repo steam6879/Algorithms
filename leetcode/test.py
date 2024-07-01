@@ -9,15 +9,18 @@ class TreeNode:
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return None
-        
-        minDepth = 0
-
-        def dfs(root):
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:        
+        def depth(root):
             if not root:
-                return None
-            
-            depth += 1
-            minDepth = min(min)
+                return 0
+
+            left = depth(root.left)
+            right = depth(root.right)
+            self.ans = max(self.ans, left + right)
+
+            return 1 + max(left, right)
+
+        self.ans = 0
+        depth(root)
+
+        return self.ans
