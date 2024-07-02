@@ -23,7 +23,8 @@ class Solution:
             return False
         # Recursively check the left and right subtrees
         else:
-            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+            return self.isSameTree(p.left, q.left) \
+                and self.isSameTree(p.right, q.right)
 
 
 class Solution_2:
