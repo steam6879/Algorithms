@@ -10,7 +10,7 @@ class TreeNode:
         self.right = right
 
 
-class Solution:
+class Solution:     # DFS
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
@@ -21,7 +21,7 @@ class Solution:
         return 1 + max(left, right)
 
 
-class Solution:
+class Solution_2:     # BFS
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         queue = deque([root])
         depth = 0
