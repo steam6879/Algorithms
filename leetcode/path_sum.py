@@ -38,7 +38,7 @@ def insertLevelOrder(arr, root, i, n):
 
 #             if targetSum in sumList:
 #                 self.ans = True
-        
+
 #         self.ans = False
 #         dfs(root)
 #         return self.ans
@@ -48,16 +48,17 @@ class Solution:
         def dfs(root, currentSum):
             if not root:    #root가 존재하지 않는 예외상황 처리.
                 return False
-            
+
             currentSum += root.val  #누적하여 합.
             if not root.left and not root.right:  # Leaf node
                 return currentSum == targetSum  #진위판단.
-            
+
             # Recursive calls for left and right subtrees
             return dfs(root.left, currentSum) or dfs(root.right, currentSum)
-        
+
         return dfs(root, 0) #0부터 누적하여 summation.
-        
+
+
 if __name__ == '__main__':
     arr = [5,4,8,11,None,13,4,7,2,None,None,None,1]
     n = len(arr)
