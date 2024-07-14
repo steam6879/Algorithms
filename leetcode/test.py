@@ -1,58 +1,45 @@
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# The isBadVersion API is already defined for you.
+# def isBadVersion(version: int) -> bool:
 
 class Solution:
-    def pathSum(self, root: TreeNode, targetSum: int) -> list[list[int]]:
-        self.paths = []
-        self.dfs(root, targetSum, [])
-        return self.paths
+    def firstBadVersion(self, n: int) -> int:
+        pl, pr = 1, n
 
-    def dfs(self, root: TreeNode, targetSum: int, path: list[int]):
-        if not root:
-            return
+        while pl <= pr:
+            pc = (pl + pr) // 2
 
-        # Append current node's value to the path
-        path.append(root.val)
-        targetSum -= root.val
+            if isBadVersion(pc):
+                pr = pc - 1
+            else:
+                pl = pc + 1
 
-        # If leaf node and targetSum is 0, add current path to paths
-        if not root.left and not root.right and targetSum == 0:
-            self.paths.append(path[:])  # Make a copy of path
+        return pl
 
-        # Recursively traverse left and right subtrees
-        self.dfs(root.left, targetSum, path)
-        self.dfs(root.right, targetSum, path)
 
-        # Backtrack: remove current node from path
-        path.pop()
+class Solution2:
+    def firstBadVersion(self, n: int) -> int:
+        if n == 1:
+            return 1
 
-# Example usage:
-# Constructing the tree
-"""
-   5
-  / \
- 4   8
-/   / \
-11  13  4
-/  \    / \
-7   2  5   1
-"""
-root = TreeNode(5)
-root.left = TreeNode(4)
-root.right = TreeNode(8)
-root.left.left = TreeNode(11)
-root.right.left = TreeNode(13)
-root.right.right = TreeNode(4)
-root.left.left.left = TreeNode(7)
-root.left.left.right = TreeNode(2)
-root.right.right.left = TreeNode(5)
-root.right.right.right = TreeNode(1)
+        pl = 1
+        pr = n
 
-solution = Solution()
-target_sum = 22
-result = solution.pathSum(root, target_sum)
-print(result)  # Output: [[5, 4, 11, 2], [5, 8, 4, 5]]
+        while pl <= pr:
+            pc = (pl + pr) // 2
+
+            if isBadVersion(pc):
+                if pc == 1:
+                    return 1
+
+                if not isBadVersion(pc - 1):
+                    return pc
+                else:
+                    pr = pc - 1
+
+            else:
+                if isBadVersion(pc + 1):
+                    return pc + 1
+                else:
+                    pl = pc + 1
+            
+        return -1
