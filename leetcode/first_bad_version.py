@@ -1,45 +1,33 @@
-# The isBadVersion API is already defined for you.
-# def isBadVersion(version: int) -> bool:
-
-class Solution:
-    def firstBadVersion(self, n: int) -> int:
-        pl, pr = 1, n
-
-        while pl <= pr:
-            pc = (pl + pr) // 2
-
-            if isBadVersion(pc):
-                pr = pc - 1
+def search(nums, target):
+    left, right = 0, len(nums) - 1
+    
+    while left <= right:
+        mid = left + (right - left) // 2
+        
+        if nums[mid] == target:
+            return mid
+        
+        if nums[left] <= nums[mid]:
+            if nums[left] <= target <= nums[mid]:
+                right = mid - 1
             else:
-                pl = pc + 1
-
-        return pl
-
-
-class Solution2:
-    def firstBadVersion(self, n: int) -> int:
-        if n == 1:
-            return 1
-
-        pl = 1
-        pr = n
-
-        while pl <= pr:
-            pc = (pl + pr) // 2
-
-            if isBadVersion(pc):
-                if pc == 1:
-                    return 1
-
-                if not isBadVersion(pc - 1):
-                    return pc
-                else:
-                    pr = pc - 1
-
+                left = mid + 1
+        else:
+            if nums[mid] <= target <= nums[right]:
+                left = mid + 1
             else:
-                if isBadVersion(pc + 1):
-                    return pc + 1
-                else:
-                    pl = pc + 1
-            
-        return -1
+                right = mid - 1
+                
+    return -1
+ 
+# Test cases
+nums1 = [4, 5, 6, 7, 0, 1, 2]
+target1 = 0
+print(search(nums1, target1))  # Output: 4
+ 
+target2 = 3
+print(search(nums1, target2))  # Output: -1
+ 
+nums3 = [1]
+target3 = 0
+print(search(nums3, target3))  # Output: -1
