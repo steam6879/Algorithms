@@ -1,38 +1,31 @@
-from collections import defaultdict
-
-class TimeMap:
-
-    def __init__(self):
-        self.m = defaultdict(list)
-
-    def set(self, key: str, value: str, timestamp: int) -> None:
-        self.m[key].append((timestamp, value))
-
-    def get(self, key: str, timestamp: int) -> str:
-        if key not in self.m:
-            return ''
-
-        values = self.m[key]
-
-        if not values:
-            return ''
-
-        pl, pr = 0, len(values) - 1
-
-        while pl <= pr:
-            pc = pl + (pr - pl) // 2
-            if values[pc][0] == timestamp:
-                return values[pc][1]
-            elif values[pc][0] < timestamp:
-                pl = pc + 1
-            else:
-                pr = pc - 1
-
-        return values[pr][1]
-
-# Example usage:
-obj = TimeMap()
-obj.set("foo", "bar", 1)
-obj.set("foo", "baz", 2)
-print(obj.get("foo", 1))  # Output: "bar"
-print(obj.get("foo", 3))  # Output: "baz"
+class Solution:
+    def numIslands(self, grid: list[list[str]]) -> int:
+        if not grid:
+            return 0
+        
+        m, n = len(grid), len(grid[0])
+        visited = set()
+        count = 0
+        
+        def dfs(i, j):
+            # Base cases
+            if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == '0' or (i, j) in visited:
+                return
+            
+            # Mark the cell as visited
+            visited.add((i, j))
+            
+            # Explore all four directions
+            dfs(i-1, j)
+            dfs(i+1, j)
+            dfs(i, j-1)
+            dfs(i, j+1)
+        
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1' and (i, j) not in visited:
+                    # Found a new island
+                    count += 1
+                    dfs(i, j)
+        
+        return count
