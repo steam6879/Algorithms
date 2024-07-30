@@ -1,31 +1,20 @@
 class Solution:
-    def numIslands(self, grid: list[list[str]]) -> int:
-        if not grid:
-            return 0
+    def orangesRotting(self, grid):
+        m, n, queue, fresh = len(grid), len(grid[0]), deque(), 0
+        for i,j in product(range(m), range(n)):
+            if grid[i][j] == 2: queue.append((i,j))
+            if grid[i][j] == 1: fresh += 1
+        dirs = [[1,0],[-1,0],[0,1],[0,-1]]
+        levels = 0
         
-        m, n = len(grid), len(grid[0])
-        visited = set()
-        count = 0
-        
-        def dfs(i, j):
-            # Base cases
-            if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == '0' or (i, j) in visited:
-                return
-            
-            # Mark the cell as visited
-            visited.add((i, j))
-            
-            # Explore all four directions
-            dfs(i-1, j)
-            dfs(i+1, j)
-            dfs(i, j-1)
-            dfs(i, j+1)
-        
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == '1' and (i, j) not in visited:
-                    # Found a new island
-                    count += 1
-                    dfs(i, j)
-        
-        return count
+        while queue:
+            levels += 1
+            for _ in range(len(queue)):
+                x, y = queue.popleft()
+                for dx, dy in dirs:
+                    if 0<=x+dx<m and 0<=y+dy<n and grid[x+dx][y+dy] == 1:
+                        fresh -= 1
+                        grid[x+dx][y+dy] = 2
+                        queue.append((x+dx, y+dy))
+                        
+        return -1 if fresh != 0 else max(levels-1, 0)
