@@ -1,20 +1,36 @@
+from collections import defaultdict
+
+
 class Solution:
-    def orangesRotting(self, grid):
-        m, n, queue, fresh = len(grid), len(grid[0]), deque(), 0
-        for i,j in product(range(m), range(n)):
-            if grid[i][j] == 2: queue.append((i,j))
-            if grid[i][j] == 1: fresh += 1
-        dirs = [[1,0],[-1,0],[0,1],[0,-1]]
-        levels = 0
-        
-        while queue:
-            levels += 1
-            for _ in range(len(queue)):
-                x, y = queue.popleft()
-                for dx, dy in dirs:
-                    if 0<=x+dx<m and 0<=y+dy<n and grid[x+dx][y+dy] == 1:
-                        fresh -= 1
-                        grid[x+dx][y+dy] = 2
-                        queue.append((x+dx, y+dy))
-                        
-        return -1 if fresh != 0 else max(levels-1, 0)
+    def accountsMerge(self, accounts: list[list[str]]) -> list[list[str]]:
+        visited = [False] * len(accounts)
+        email_to_accounts = defaultdict(list)
+        ans = []
+
+        # Build email-to-accounts mapping
+        for i, account in enumerate(accounts):
+            for j in range(1, len(account)):
+                email = account[j]
+                email_to_accounts[email].append(i)
+
+        def dfs(i, emails):
+            if visited[i]:
+                return
+            visited[i] = True
+            for j in range(1, len(accounts[i])):
+                email = accounts[i][j]
+                emails.add(email)
+                for neighbor in email_to_accounts[email]:
+                    if not visited[neighbor]:
+                        dfs(neighbor, emails)
+
+        # Process each account
+        for i, account in enumerate(accounts):
+            if visited[i]:
+                continue
+            name = account[0]
+            emails = set()
+            dfs(i, emails)
+            ans.append([name] + sorted(emails))
+
+        return ans
