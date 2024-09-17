@@ -1,114 +1,42 @@
-from collections import defaultdict
+from typing import Optional
 
-def topological_sort_kahn(graph):
-    indegree = defaultdict(int) # Track indegrees
-    queue = [] #Initialize queue
-
-    # Calculate indegrees
-    for node in graph:
-        for neighbour in graph[node]:
-            indegree[neighbour] += 1
-
-    # Add nodes with 0 indegree to queue
-    for node in graph:
-        if indegree[node] == 0:
-            queue.append(node)
-
-    topological_order = []
-
-    # Process until queue is empty
-    while queue:
-
-        # Remove node from queue and add to topological order
-        node = queue.pop(0)
-        topological_order.append(node)
-
-        # Reduce indegree for its neighbors
-        for neighbour in graph[node]:
-            indegree[neighbour] -= 1
-
-            # Add new 0 indegree nodes to queue
-            if indegree[neighbour] == 0:
-                queue.append(neighbour)
-
-    if len(topological_order) != len(graph):
-        print("Cycle exists")
-
-    print(topological_order)
-
-topological_sort_kahn(graph)
-
-
-from collections import defaultdict, deque
-from typing import List
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Solution:
-    def findOrder(self, num_courses: int, prerequisites: List[List[int]]) -> List[int]:
-        # Initialize a graph using a dictionary to map each course to its list of dependent courses
-        graph = defaultdict(list)
-      
-        # Initialize a list to count incoming edges (prerequisites) for each course
-        incoming_edges_count = [0] * num_courses
-      
-        # Build the graph and update the count of incoming edges for each course
-        for course, prerequisite in prerequisites:
-            graph[prerequisite].append(course)
-            incoming_edges_count[course] += 1
-      
-        # List to store the course order
-        course_order = []
-      
-        # Queue to manage the courses with no incoming edges (no prerequisites)
-        queue = deque(course for course, count in enumerate(incoming_edges_count) if count == 0)
-      
-        # Process the courses using a topological sort via BFS (Breadth-First Search)
-        while queue:
-            current_course = queue.popleft()
-            course_order.append(current_course) # add the current course to the course order
-          
-            # Reduce the incoming edge count of dependent courses by 1
-            for dependent_course in graph[current_course]:
-                incoming_edges_count[dependent_course] -= 1
-              
-                # If a dependent course now has no incoming edges, add it to the queue
-                if incoming_edges_count[dependent_course] == 0:
-                    queue.append(dependent_course)
-      
-        # Check if the number of courses in the order list matches the total number of courses
-        # If not, it means not all courses can be completed (cycle detected)
-        return course_order if len(course_order) == num_courses else []
-    
-
-    from collections import defaultdict, deque
-
-class Solution:
-    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        # Construct the graph
-        graph = defaultdict(list)
-        incoming_edges = [0] * numCourses
+    def isValidBST(self, root: Optional[TreeNode], min_val=float('-inf'), max_val=float('inf')) -> bool:
+        if not root:
+            return True
         
-        for u, v in prerequisites:
-            graph[v].append(u)
-            incoming_edges[u] += 1
-            
-        # Add nodes with incoming edge count = 0 to the queue
-        queue = deque([])
-        for i in range(numCourses):
-            if incoming_edges[i] == 0:
-                queue.append(i)
-                
-        result = []
-        while queue:
-            node = queue.popleft()
-            result.append(node)
-            
-            for adjacent_node in graph[node]:
-                incoming_edges[adjacent_node] -= 1
-                
-                if incoming_edges[adjacent_node] == 0:
-                    queue.append(adjacent_node)
-                    
-        if len(result) != numCourses:
-            return []
+        if not (min_val < root.val < max_val):
+            return False
         
-        return result
+        return (self.isValidBST(root.left, min_val, root.val) and
+                self.isValidBST(root.right, root.val, max_val))
+
+# Time complexity: O(n)
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+ 
+def isValidBST(root):
+    def validate(node, low=float('-inf'), high=float('inf')):
+        # An empty tree is a valid BST
+        if not node:
+            return True
+ 
+        # The current node's value must be between low and high
+        if node.val <= low or node.val >= high:
+            return False
+ 
+        # Recursively validate the left and right subtree
+        return (validate(node.left, low, node.val) and
+                validate(node.right, node.val, high))
+ 
+    return validate(root)
