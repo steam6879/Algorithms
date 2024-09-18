@@ -1,11 +1,11 @@
+from collections import defaultdict
+
+
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        m = {}
+        m = defaultdict(lambda: 0)
         for char in magazine:
-            if char not in m:
-                m[char] = 1
-            else:
-                m[char] += 1
+            m[char] += 1
 
         for char in ransomNote:
             if char in m:
@@ -13,9 +13,9 @@ class Solution:
                     m[char] -= 1
                 else:
                     return False
-            
+
             else:
                 return False
-            
+
         else:
             return True
