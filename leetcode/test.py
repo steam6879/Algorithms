@@ -1,22 +1,39 @@
-def coinChange(coins, amount):
-    dp = [float('inf')] * (amount + 1)
-    dp[0] = 0
-    
-    for coin in coins:
-        for i in range(coin, amount + 1):
-            dp[i] = min(dp[i], dp[i - coin] + 1)
-    
-    return dp[amount] if dp[amount] != float('inf') else -1
+class Solution:
+    def canPartition(self, nums: list[int]) -> bool:
+        total = sum(nums)
+
+        if total % 2 != 0: return False
+        
+        total //= 2
+
+        dp = [0] * 20001
+        dp[0] = 1
+        
+        for num in nums:
+            idx = total
+            while idx-num >= 0 :
+                if dp[idx] or dp[idx-num]:
+                    dp[idx] = 1
+                idx -= 1
+
+            if dp[total]: return True
+
+        return False
+
  
-# Test cases
-coins1 = [1, 2, 5]
-amount1 = 11
-print(coinChange(coins1, amount1))  # Output: 3
- 
-coins2 = [2]
-amount2 = 3
-print(coinChange(coins2, amount2))  # Output: -1
- 
-coins3 = [1]
-amount3 = 0
-print(coinChange(coins3, amount3))  # Output: 0
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if not nums:
+            return True
+        n = len(nums)
+        if sum(nums) % 2 != 0:
+            return False
+        target = sum(nums)//2
+        dp = [False for _ in range(target+1)]
+        dp[0] = True
+        for num in nums:
+            for j in range(target, num-1, -1):
+                dp[j] = dp[j] or dp[j-num]
+            if dp[target]:
+                return True
+        return False
