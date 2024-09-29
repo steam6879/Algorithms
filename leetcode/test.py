@@ -1,17 +1,19 @@
 class Solution:
-    def addBinary(self, a: str, b: str) -> str:
-        carry = 0
-        ans = ""
+    def romanToInt(self, s: str) -> int:
+        ans = 0
+        m = {"I": 1,
+             "V": 5,
+             "X": 10,
+             "L": 50,
+             "C": 100,
+             "D": 500,
+             "M": 1000}
 
-        a, b = list(a), list(b)
+        for i, roman in enumerate(s):
+            if i + 1 < len(s) and m[roman] < m[s[i + 1]]:
+                ans -= m[roman]
 
-        while a or b or carry:
-            if a:
-                carry += int(a.pop())
-            if b:
-                carry += int(b.pop())
+            else:
+                ans += m[roman]
 
-            ans += str(carry % 2)
-            carry //= 2
-
-        return ans[::-1]
+        return ans
