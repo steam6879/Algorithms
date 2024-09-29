@@ -1,19 +1,17 @@
 class Solution:
-    def romanToInt(self, s: str) -> int:
-        ans = 0
-        m = {"I": 1,
-             "V": 5,
-             "X": 10,
-             "L": 50,
-             "C": 100,
-             "D": 500,
-             "M": 1000}
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        heap = []
 
-        for i, roman in enumerate(s):
-            if i + 1 < len(s) and m[roman] < m[s[i + 1]]:
-                ans -= m[roman]
+        for x, y in points:
+            distance = x**2 + y**2 # sqrt does not matter for the size
 
+            # use negative distance for max heap
+            # adding new distance, and popping out the largest distance
+            if len(heap) < k:
+                heapq.heappush(heap, (-distance, x, y))
             else:
-                ans += m[roman]
+                heapq.heappushpop(heap, (-distance, x, y))
 
-        return ans
+        return [[x, y] for _, x, y in heap]
+            
+            
