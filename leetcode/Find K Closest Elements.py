@@ -32,5 +32,3 @@ class Solution2:
         ans.sort()
 
         return ans
-
-
