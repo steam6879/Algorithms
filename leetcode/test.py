@@ -1,26 +1,57 @@
-def wordBreak(s, wordDict):
-    # Create a set for faster lookup
-    word_set = set(wordDict)
+class WordDictionary:
+    def __init__(self):
+        self.root = {"$": True}
+
+    def addWord(self, word: str) -> None:
+        node = self.root
+        for ch in word:
+            if ch not in node:
+                node[ch] = {"$": False}
+            node = node[ch]
+        node["$"] = True
+
+    def search(self, word: str) -> bool:
+        def dfs(node, idx):
+            if idx == len(word):
+                return node["$"]
+            ch = word[idx]
+            if ch in node:
+                return dfs(node[ch], idx + 1)
+            if ch == ".":
+                return any(dfs(node[k], idx + 1) for k in node if k != "$")
+
+        return dfs(self.root, 0)
     
-    # Initialize a boolean array to track if a substring can be segmented
-    dp = [False] * (len(s) + 1)
-    dp[0] = True  # An empty string can always be segmented
- 
-    for i in range(1, len(s) + 1):
-        for j in range(i):
-            print("i= ", i)
-            print("j= ", j)
-            print(s[j:i])
-            if dp[j] and s[j:i] in word_set:
-                
-                dp[i] = True
-                print('true dp= ', dp)
-                break
-            print("dp =", dp)
-            print("-----------------------")
-    return dp[len(s)]
- 
-# Test cases
-s1 = "leetcode"
-wordDict1 = ["leet", "code"]
-print(wordBreak(s1, wordDict1))  # Output: True
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class WordDictionary:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        node = self.root
+        for character in word:
+            if character not in node.children:
+                node.children[character] = TrieNode()
+            node = node.children[character]
+        node.is_end = True
+
+    def search(self, word: str) -> bool:
+        def dfs(i, node):
+            if i == len(word):
+                return node.is_end
+            
+            character = word[i]
+            if character == '.':
+                for character in node.children:
+                    if dfs(i+1, node.children[character]):
+                        return True
+            elif character in node.children:
+                return dfs(i+1, node.children[character])
+        return dfs(0, self.root)
