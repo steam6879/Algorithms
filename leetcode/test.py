@@ -1,57 +1,53 @@
-class WordDictionary:
-    def __init__(self):
-        self.root = {"$": True}
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # Helper function to perform depth-first search for permutation generation
+        def backtrack(index):
+            # If the current index has reached the length of nums list,
+            # we have a complete permutation
+            if index == len_nums:
+                permutations.append(current_permutation[:])
+                return
+          
+            # Iterate over the nums list to create permutations
+            for j in range(len_nums):
+                # Check if the number at index j is already used in the current permutation
+                if not visited[j]:
+                    # If not visited, mark it as visited and add to current permutation
+                    visited[j] = True
+                    current_permutation[index] = nums[j]
+                    # Recurse with next index
+                    backtrack(index + 1)
+                    # Backtrack: unmark the number at index j as visited for the next iteration
+                    visited[j] = False
 
-    def addWord(self, word: str) -> None:
-        node = self.root
-        for ch in word:
-            if ch not in node:
-                node[ch] = {"$": False}
-            node = node[ch]
-        node["$"] = True
+        len_nums = len(nums)  # Store the length of the input list
+        visited = [False] * len_nums  # Create a visited list to track numbers that are used
+        current_permutation = [0] * len_nums  # Temp list to store the current permutation
+        permutations = []  # Result list to store all the permutations
+        backtrack(0)  # Start generating permutations from index 0
+        return permutations
 
-    def search(self, word: str) -> bool:
-        def dfs(node, idx):
-            if idx == len(word):
-                return node["$"]
-            ch = word[idx]
-            if ch in node:
-                return dfs(node[ch], idx + 1)
-            if ch == ".":
-                return any(dfs(node[k], idx + 1) for k in node if k != "$")
 
-        return dfs(self.root, 0)
+from typing import List
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.nums = nums
+        self.perms = []
+        
+        self.dfs([])
+        return self.perms
     
-
-
-class TrieNode:
-    def __init__(self):
-        self.children = {}
-        self.is_end = False
-
-class WordDictionary:
-
-    def __init__(self):
-        self.root = TrieNode()
-
-    def addWord(self, word: str) -> None:
-        node = self.root
-        for character in word:
-            if character not in node.children:
-                node.children[character] = TrieNode()
-            node = node.children[character]
-        node.is_end = True
-
-    def search(self, word: str) -> bool:
-        def dfs(i, node):
-            if i == len(word):
-                return node.is_end
+    def dfs(self, crnt_set: List[int]):
+        if len(crnt_set) == len(self.nums):
+            self.perms.append(crnt_set.copy())
+            return
+        
+        for num in self.nums:
+            if num in crnt_set:
+                continue
             
-            character = word[i]
-            if character == '.':
-                for character in node.children:
-                    if dfs(i+1, node.children[character]):
-                        return True
-            elif character in node.children:
-                return dfs(i+1, node.children[character])
-        return dfs(0, self.root)
+            crnt_set.append(num)
+            self.dfs(crnt_set)
+            crnt_set.pop()
