@@ -9,7 +9,6 @@ class Solution:
 
                 j = i - 1
 
-
                 for k in range(i, len(nums)):
                     if nums[j] < nums[k]:
                         nums[k], nums[j] = nums[j], nums[k]
