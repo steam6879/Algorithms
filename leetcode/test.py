@@ -2,14 +2,12 @@ from typing import List
 
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        m = {}
-        for i in range(len(nums)):
-            complement = target - nums[i]
+    def maxProfit(self, prices: List[int]) -> int:
+        buyMin = 10000
+        profit = 0
 
-            if complement in m:
-                return [m[complement], i]
-            else:
-                m[nums[i]] = i
+        for price in prices:
+            buyMin = min(buyMin, price)
+            profit = max(profit, price - buyMin)
 
-        return []
+        return profit
