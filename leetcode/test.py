@@ -1,14 +1,22 @@
 from typing import List
-from collections import Counter
 
 
 class Solution:
-    def containsDuplicate(self, nums: List[int]) -> bool:
-        counters = Counter(nums)
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        ans = []
 
-        for value in counters.values():
-            if value >= 2:
-                return True
-            
-        else:
-            return False
+        for i in range(len(intervals)):
+            if intervals[i][1] < newInterval[0]:    # case 1
+                ans.append(intervals[i])
+
+            elif intervals[i][0] > newInterval[1]:  # case 3
+                ans.append(newInterval)
+
+                return ans + intervals[i:]
+
+            else:   # case 2
+                newInterval = [min(intervals[i][0], newInterval[0]), max(intervals[i][1], newInterval[1])]
+
+        ans.append(newInterval)
+
+        return ans
