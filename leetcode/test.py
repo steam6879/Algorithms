@@ -2,12 +2,17 @@ from typing import List
 
 
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        buyMin = 10000
-        profit = 0
+    def majorityElement(self, nums: List[int]) -> int:
+        count, candidate = 0, 0
 
-        for price in prices:
-            buyMin = min(buyMin, price)
-            profit = max(profit, price - buyMin)
+        for num in nums:
+            if count == 0:
+                candidate = num
 
-        return profit
+            if num == candidate:
+                count += 1
+
+            else:
+                count -= 1
+
+        return candidate
