@@ -1,18 +1,14 @@
 from typing import List
+from collections import Counter
 
 
 class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
-        count, candidate = 0, 0
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        counters = Counter(nums)
 
-        for num in nums:
-            if count == 0:
-                candidate = num
-
-            if num == candidate:
-                count += 1
-
-            else:
-                count -= 1
-
-        return candidate
+        for value in counters.values():
+            if value >= 2:
+                return True
+            
+        else:
+            return False
