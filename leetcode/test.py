@@ -2,21 +2,51 @@ from typing import List
 
 
 class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        ans = []
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        triplets = []
+        nums.sort()
 
-        for i in range(len(intervals)):
-            if intervals[i][1] < newInterval[0]:    # case 1
-                ans.append(intervals[i])
+        for i, num in enumerate(nums):
+            if i > 0 and num == num[i - 1]:
+                continue
 
-            elif intervals[i][0] > newInterval[1]:  # case 3
-                ans.append(newInterval)
+            left, right = i + 1, len(nums) - 1
+            while left < right:
+                target = num + nums[left] + nums[right]
 
-                return ans + intervals[i:]
+                if target > 0:
+                    right -= 1
+                elif target < 0:
+                    left += 1
 
-            else:   # case 2
-                newInterval = [min(intervals[i][0], newInterval[0]), max(intervals[i][1], newInterval[1])]
+                else:
+                    triplets.append([num, nums[left], nums[right]])
+                    left += 1
+                    right += 1
 
-        ans.append(newInterval)
+            return triplets
 
-        return ans
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        triplets = set()
+        nums.sort()
+
+        for i in range(len(nums) - 2):
+            low, high = i + 1, len(nums) - 1
+
+            while low < high:
+                three_sum = nums[i] + nums[low] + nums[high]
+                if three_sum < 0:
+                    low += 1
+                elif three_sum > 0:
+                    high -= 1
+
+                else:
+                    triplets.add((nums[i], nums[low], nums[high]))
+                    low += 1
+
+                    while low < high and nums[low] == nums[low - 1]:
+                        low += 1
+
+        return list(triplets)

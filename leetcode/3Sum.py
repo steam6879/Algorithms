@@ -46,6 +46,24 @@ class Solution:
 
         return ans
 
-    
+
+class Solution2:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        triplets = set()
+
+        for i in range(len(nums) - 2):
+            seen = set()
+            for j in range(i + 1, len(nums)):
+                complement = -(nums[i] + nums[j])
+
+                if complement in seen:
+                    triplet = [nums[i], nums[j], complement]
+                    triplets.add(tuple(sorted(triplet)))
+
+                seen.add(nums[j])
+
+        return list(triplets)
+
+
 if __name__ == "__main__":
     print(Solution.threeSum(Solution, nums = [-1,0,1,2,-1,-4]))
