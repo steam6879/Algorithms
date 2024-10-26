@@ -2,20 +2,19 @@ from typing import List
 
 
 class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        ans = [1] * n
-        
-        # Calculate prefix products
-        prefix = 1
-        for i in range(n):
-            ans[i] = prefix
-            prefix *= nums[i]
-        
-        # Calculate suffix products and multiply with prefix
-        suffix = 1
-        for i in range(n - 1, -1, -1):
-            ans[i] *= suffix
-            suffix *= nums[i]
-        
-        return ans
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans, nums = [], []
+
+        def dfs(start, total):
+            if total > target:
+                return None
+
+            elif total == target:
+                ans.append(nums[:])
+
+            else:
+                for i in range(start, len(candidates)):
+                    num = candidates[i]
+                    nums.append(num)
+                    dfs(i, total + num)
+                    nums.pop()

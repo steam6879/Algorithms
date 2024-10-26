@@ -1,5 +1,6 @@
 from typing import List
 
+
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         ans, nums = [], []
@@ -20,7 +21,30 @@ class Solution:
 
         dfs(0, 0)
         return ans
-    
+
+
+class Solution2:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        result = []
+
+        def backtrack(remaining, combo, start):
+            if remaining == 0:
+                result.append(list(combo))
+                return None
+
+            for i in range(start, len(candidates)):
+                current = candidates[i]
+                if current > remaining:
+                    break
+
+                combo.append(current)
+                backtrack(remaining - current, combo, i)
+                combo.pop()
+
+        backtrack(target, [], 0)
+        return result
+
 if __name__ == "__main__":
     print(Solution.combinationSum(Solution, candidates=[2, 3, 5], target=8))
 
