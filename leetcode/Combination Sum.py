@@ -45,8 +45,6 @@ class Solution2:
         backtrack(target, [], 0)
         return result
 
-if __name__ == "__main__":
-    print(Solution.combinationSum(Solution, candidates=[2, 3, 5], target=8))
 
 # class Solution:
 #     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
