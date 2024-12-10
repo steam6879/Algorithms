@@ -2,18 +2,17 @@ from typing import List
 
 
 class Solution:
-    def sortColors(self, nums: List[int]) -> None:
-        low, mid, high = 0, 0, len(nums) - 1
+    def maxArea(self, height: List[int]) -> int:
+        left, right = 0, len(height) - 1
+        maxArea = 0
 
-        while mid <= high:
-            if nums[mid] == 0:
-                nums[low], nums[mid] = nums[mid], nums[low]
-                low += 1
-                mid += 1
+        while left < right:
+            currArea = min(height[left], height[right]) * (right - left)
+            maxArea = max(maxArea, currArea)
 
-            elif nums[mid] == 1:
-                mid += 1
-
+            if height[left] < height[right]:
+                left += 1
             else:
-                nums[high], nums[mid] = nums[mid], nums[high]
-                high -= 1
+                right -= 1
+
+        return maxArea
