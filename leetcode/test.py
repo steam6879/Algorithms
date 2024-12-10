@@ -2,22 +2,18 @@ from typing import List
 
 
 class Solution:
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        ans, nums = [], []
+    def sortColors(self, nums: List[int]) -> None:
+        low, mid, high = 0, 0, len(nums) - 1
 
-        def dfs(start, total):
-            if total > target:
-                return None
-            
-            elif total == target:
-                ans.append(nums[:])
-            
+        while mid <= high:
+            if nums[mid] == 0:
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low += 1
+                mid += 1
+
+            elif nums[mid] == 1:
+                mid += 1
+
             else:
-                for i in range(start, len(candidates)):
-                    num = candidates[i]
-                    nums.append(num)
-                    dfs(i, total + num)
-                    nums.pop()
-            
-        dfs(0, 0)
-        return ans
+                nums[high], nums[mid] = nums[mid], nums[high]
+                high -= 1
