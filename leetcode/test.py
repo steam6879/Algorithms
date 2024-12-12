@@ -2,17 +2,16 @@ from typing import List
 
 
 class Solution:
-    def maxArea(self, height: List[int]) -> int:
-        left, right = 0, len(height) - 1
-        maxArea = 0
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(gas) < sum(cost):
+            return -1
 
-        while left < right:
-            currArea = min(height[left], height[right]) * (right - left)
-            maxArea = max(maxArea, currArea)
+        total, ans = 0, 0
+        for i in range(len(gas)):
+            total += gas[i] - cost[i]
 
-            if height[left] < height[right]:
-                left += 1
-            else:
-                right -= 1
+            if total < 0:
+                total = 0
+                ans = i + 1
 
-        return maxArea
+        return ans
