@@ -2,16 +2,22 @@ from typing import List
 
 
 class Solution:
-    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
-        if sum(gas) < sum(cost):
-            return -1
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
 
-        total, ans = 0, 0
-        for i in range(len(gas)):
-            total += gas[i] - cost[i]
+        ans, count = 1, 1
+        nums.sort()
 
-            if total < 0:
-                total = 0
-                ans = i + 1
+        for i in range(len(nums) - 1):
+            if nums[i + 1] == nums[i] + 1:
+                count += 1
 
-        return ans
+            elif nums[i + 1] == nums[i]:
+                continue
+
+            else:
+                ans = max(ans, count)
+                count = 1
+
+        return max(ans, count)

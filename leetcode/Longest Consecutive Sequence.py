@@ -1,10 +1,11 @@
 from typing import List
 
+
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         if not nums:
             return 0
-        
+
         ans, count = 1, 1
         nums.sort()
 
@@ -21,7 +22,8 @@ class Solution:
                 count = 1
 
         return ans
-    
+
+
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         longest = 0
