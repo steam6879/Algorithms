@@ -2,22 +2,11 @@ from typing import List
 
 
 class Solution:
-    def longestConsecutive(self, nums: List[int]) -> int:
-        if not nums:
-            return 0
+    def rotate(self, nums: List[int], k: int) -> None:
+        k = k % len(nums)
+        nums.reverse()
 
-        ans, count = 1, 1
-        nums.sort()
+        nums[:k] = reversed(nums[:k])
+        nums[k:] = reversed(nums[k:])
 
-        for i in range(len(nums) - 1):
-            if nums[i + 1] == nums[i] + 1:
-                count += 1
-
-            elif nums[i + 1] == nums[i]:
-                continue
-
-            else:
-                ans = max(ans, count)
-                count = 1
-
-        return max(ans, count)
+        return nums
