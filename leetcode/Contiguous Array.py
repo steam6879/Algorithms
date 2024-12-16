@@ -21,7 +21,7 @@ class Solution: #실패
 
         m = Counter(prefixSum)
 
-        maxKey = max(m, key = m.get)
+        maxKey = max(m, key=m.get)
         i1 = prefixSum.index(maxKey)
         i2 = len(prefixSum) - 1 - prefixSum[::-1].index(maxKey)
 
