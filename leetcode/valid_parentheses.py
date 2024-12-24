@@ -15,8 +15,9 @@ class Solution(object):
                 return False
 
         return len(stack) == 0
-    
-class Solution:     #24.5.6. ~ my solution in grind 98
+
+
+class Solution2:     # 24.5.6. ~ my solution in grind 98
     def isValid(self, s: str) -> bool:
         stack = []
         pairs = {'[' : ']',

@@ -1,17 +1,26 @@
-class Solution:
-    def isValid(self, s: str) -> bool:
-        stack = []
-        pairs = {
-            '(': ')',
-            '{': '}',
-            '[': ']'
-        }
+class MyQueue:
 
-        for bracket in s:
-            if bracket in pairs:
-                stack.append(pairs[bracket])
+    def __init__(self):
+        self.que = collections.deque()
 
-            elif not stack or bracket != stack.pop():
-                return False
-            
-        return not stack
+    def push(self, x: int) -> None:
+        self.que.append(x)
+
+    def pop(self) -> int:
+        if self.que:
+            return self.que.popleft()
+
+    def peek(self) -> int:
+        if self.que:
+            return self.que[0]
+
+    def empty(self) -> bool:
+        return not self.que
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
